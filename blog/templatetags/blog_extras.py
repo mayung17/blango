@@ -3,9 +3,12 @@ from django import template
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
+import logging
 from blog.models import Post
 register = template.Library()
 user_model = get_user_model()
+
+logger = logging.getLogger(__name__)
 
 @register.filter
 def author_details(author, current_user):
@@ -47,6 +50,7 @@ def endcol():
 
 @register.inclusion_tag("blog/post-list.html")
 def recent_posts(post):
+    logger.debug("Loaded %d recent posts for post %d", len(posts), post.pk)
     posts = Post.objects.exclude(pk=post.pk)[:5]
     return {"title": "Recent Posts", "posts": posts}
 
