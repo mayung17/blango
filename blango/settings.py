@@ -60,6 +60,7 @@ class Dev(Configuration):
       'allauth.socialaccount',
       'allauth.socialaccount.providers.google',
       'rest_framework',
+      'rest_framework.authtoken'
   ]
   SITE_ID = 1
   ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -137,6 +138,14 @@ class Dev(Configuration):
 
   USE_TZ = True
 
+  REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
+
 
   # Static files (CSS, JavaScript, Images)
   # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -197,6 +206,8 @@ class Dev(Configuration):
         "handlers": ["console"],
         "level": "DEBUG",
     },
+
+
 
  
 }
